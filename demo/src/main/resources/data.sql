@@ -1,1 +1,0 @@
-INSERT INTO DOG (id,nome,origem,idade) VALUES (1,'India','Pitbull',2),(2,'Xuca','Vira Lata',1);
