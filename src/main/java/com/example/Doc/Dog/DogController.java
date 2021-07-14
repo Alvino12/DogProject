@@ -23,7 +23,7 @@ public class DogController {
     @GetMapping
     public List<DogDTO> getDog(){
         List<DogModel> dog= dogService.getDog();
-        List<DogDTO> dogDTO = toDogDTO(dog);
+        List<DogInsertDTO> dogDTO = toDogDTO(dog);
 
         return dogDTO;
     }
