@@ -29,14 +29,14 @@ public class DogService {
     public void deleteDog(Long dogID){
         boolean exist=dogRepository.existsById(dogID);
         if(!exist){
-            throw new IllegalStateException(
-                    "Dog Com Id=" +dogID+ " nao existe");
+            throw new DogRequestException("Dog Com Id=" +dogID+ " nao existe");
         }
         dogRepository.deleteById(dogID);
 
     }
 
     public void updateDog(DogModel dogModel,Long DogID){
+
 
         DogModel dogModel1 = dogRepository.findById(DogID).orElseThrow(() ->new IllegalStateException(
                 "cao com esse Id nao existe"
