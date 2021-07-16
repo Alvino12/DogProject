@@ -1,4 +1,4 @@
-package com.example.Doc.Dog;
+package com.example.Doc.Dog.Exception;
 
 import lombok.Data;
 

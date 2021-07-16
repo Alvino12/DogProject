@@ -1,9 +1,8 @@
 package com.example.Doc.Dog;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.Doc.Dog.Exception.DogRequestException;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Objects;
 

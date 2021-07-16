@@ -1,4 +1,4 @@
-package com.example.Doc.Dog;
+package com.example.Doc.Dog.Exception;
 
 
 import org.springframework.http.HttpStatus;
