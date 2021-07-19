@@ -1,18 +1,15 @@
-package com.example.Doc.Dog;
+package com.example.Doc.Dog.DTO;
 
 import lombok.Data;
 
-import javax.validation.constraints.Max;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 @Data
-public class DogPutDTO {
-
+public class DogListDTO {
+        private Long id;
         private String nome;
-
         private String origem;
-
-        @Max(2)
         private Integer idade;
 
 }

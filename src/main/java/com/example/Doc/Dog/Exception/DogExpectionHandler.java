@@ -1,28 +1,24 @@
 package com.example.Doc.Dog.Exception;
 
 
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.Nullable;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
+import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 @ControllerAdvice
-public class DogExpectionHandler {
+public class DogExpectionHandler extends ResponseEntityExceptionHandler {
 
-    @ExceptionHandler(value = {DogRequestException.class})
-    public ResponseEntity<Object> handleDogRequestException(DogRequestException e){
-        // 1. Create payload containing exception details
-
-        HttpStatus badRequest=HttpStatus.BAD_REQUEST;
-
-        DogExpection dogExpection=new DogExpection(
-                e.getMessage(), e , badRequest , ZonedDateTime.now(ZoneId.of("Z"))
-        );
-        // 2. Return reponse entity
-        return new ResponseEntity<>(dogExpection , badRequest);
+    protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
+        ResponceE rp=new ResponceE();
+        rp.mensagem="Todos os campos devem ser preenchidos";
+        rp.errors=ex.getAllErrors();
+        rp.codigo= status.name();
+        return this.handleExceptionInternal(ex, rp, headers, status, request);
     }
 
 

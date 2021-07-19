@@ -1,12 +1,18 @@
 package com.example.Doc.Dog;
 
+import com.example.Doc.Dog.DTO.DogInsertDTO;
+import com.example.Doc.Dog.DTO.DogListDTO;
+import com.example.Doc.Dog.DTO.DogPutDTO;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
+
 @RestController
+@CrossOrigin
 @RequestMapping(path = "api/v1/dog")
 public class DogController {
 
@@ -21,16 +27,23 @@ public class DogController {
 
 
     @GetMapping
-    public List<DogInsertDTO> getDog(){
+    public List<DogListDTO> getDog(){
         List<DogModel> dog= dogService.getDog();
-        List<DogInsertDTO> dogInsertDTO = toDogDTO(dog);
+        List<DogListDTO> dogListDTO = toDogDTO(dog);
 
-        return dogInsertDTO;
+        return dogListDTO;
+    }
+
+    @GetMapping(path="{dogID}")
+    public DogListDTO getDogByID(@PathVariable("dogID") Long dogID){
+        DogModel dog= dogService.getDogByID(dogID);
+        DogListDTO dogListDTO = toDogDTOID(dog);
+        return dogListDTO;
     }
 
     @PostMapping
-    public void registerNewdog(@RequestBody DogInsertDTO dogInsertDTO){
-        DogModel dog = toDogModel(dogInsertDTO);
+    public void registerNewdog(@RequestBody @Valid DogInsertDTO dogInsertDTO){
+        DogModel dog = toDogModelI(dogInsertDTO);
         dogService.addNewDog(dog);
     }
 
@@ -41,21 +54,25 @@ public class DogController {
 
     @PutMapping(path="{dogID}")
     public void updateDog(@PathVariable("dogID") Long DogID,@RequestBody DogPutDTO dogDTO){
-        DogModel dog=toDogModel(dogDTO);
+        DogModel dog=toDogModelP(dogDTO);
         dogService.updateDog(dog,DogID);
     }
 
-    private DogModel toDogModel(DogInsertDTO dogInsertDTO){
+    private DogModel toDogModelI(DogInsertDTO dogInsertDTO){
         return modelMapper.map(dogInsertDTO,DogModel.class);
     }
 
-    private DogModel toDogModel(DogPutDTO dogputDTO){
+    private DogModel toDogModelP(DogPutDTO dogputDTO){
         return modelMapper.map(dogputDTO,DogModel.class);
     }
 
-    private List<DogInsertDTO> toDogDTO(List<DogModel> dogModel){
-        List<DogInsertDTO> dogInsertDTO = modelMapper.map(dogModel, new TypeToken<List<DogInsertDTO>>() {}.getType());
-        return dogInsertDTO;
+    private List<DogListDTO> toDogDTO(List<DogModel> dogModel){
+        List<DogListDTO> dogListDTO = modelMapper.map(dogModel, new TypeToken<List<DogListDTO>>() {}.getType());
+        return dogListDTO;
+    }
+    private DogListDTO toDogDTOID(DogModel dogModel){
+        DogListDTO dogListDTO = modelMapper.map(dogModel, new TypeToken<DogListDTO>() {}.getType());
+        return dogListDTO;
     }
 
 
