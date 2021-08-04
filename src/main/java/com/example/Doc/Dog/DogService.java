@@ -26,8 +26,11 @@ public class DogService {
        return dog;
     }
 
-    public void addNewDog(DogModel dogModel){
-        dogRepository.save(dogModel);
+    public DogModel addNewDog(DogModel dogModel)
+    {
+        DogModel dog=dogRepository.save(dogModel);
+        return  dog;
+
     }
 
     public void deleteDog(Long dogID){

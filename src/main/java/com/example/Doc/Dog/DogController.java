@@ -42,9 +42,11 @@ public class DogController {
     }
 
     @PostMapping
-    public void registerNewdog(@RequestBody @Valid DogInsertDTO dogInsertDTO){
+    public DogListDTO registerNewdog(@RequestBody @Valid DogInsertDTO dogInsertDTO){
         DogModel dog = toDogModelI(dogInsertDTO);
-        dogService.addNewDog(dog);
+        DogModel dogModel = dogService.addNewDog(dog);
+        return toDogDTOID(dogModel);
+
     }
 
     @DeleteMapping(path="{dogID}")
